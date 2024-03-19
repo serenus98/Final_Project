@@ -42,12 +42,12 @@ def find_TaxonID (species_name, species_list=species_list):
 species1_tax_id = find_TaxonID(species1)
 species2_tax_id = find_TaxonID(species2)
 species3_tax_id = find_TaxonID(species3)
-print(species1_tax_id)
-print(species2_tax_id)
-print(species3_tax_id)
-#members_list = readFile(meNOG_members_filename_path)
+print("species1_tax_id: ", species1_tax_id)
+print("species2_tax_id: ", species2_tax_id)
+print("species3_tax_id: ", species3_tax_id)
+members_list = readFile(meNOG_members_filename_path)
 
-members_list = readFile(me_NOG_test_filename_path)
+#members_list = readFile(me_NOG_test_filename_path)
 
 #def find_NOGs (taxon_ID, members_list = members_list):
 #    NOG_dict = {}
@@ -60,14 +60,14 @@ members_list = readFile(me_NOG_test_filename_path)
 #    return NOG_dict
 
 def find_NOGs (taxon_ID, members_list = members_list):
-    NOG_set = []
+    NOG_list = []
 
     for line in members_list:
             Nog = line.split("\t")[1]
             TaxonID_ProteinID = line.split("\t")[5]
             if taxon_ID in TaxonID_ProteinID:
-                NOG_set.append(TaxonID_ProteinID)
-    return NOG_set
+                NOG_list.append(TaxonID_ProteinID)
+    return NOG_list
 
 def find_NOG_and_proteinID(taxon_ID, members_list = members_list):
     NOG_dict = {}
@@ -77,8 +77,6 @@ def find_NOG_and_proteinID(taxon_ID, members_list = members_list):
             Nog = line.split("\t")[1]
             TaxonID_ProteinID = line.split("\t")[5]
             NOG_dict[Nog] = TaxonID_ProteinID
-            #if taxon_ID in TaxonID_ProteinID:
-            #    NOG_dict.append(TaxonID_ProteinID)
     for key in NOG_dict:
         new_protein_list = []
         NOG_dict[key] = NOG_dict[key].split(",")
@@ -99,12 +97,14 @@ def NOG_list(taxon_ID):
     NOGs_list = []
     dict = find_NOG_and_proteinID(taxon_ID)
     for key in dict:
-        NOGs_list.append(key)
+        for protein in dict[key]:
+            if protein[0] == taxon_ID:
+                NOGs_list.append(key)
     return NOGs_list
 
-species1_NOG = find_NOGs(species1_tax_id)
-species2_NOG = find_NOGs(species2_tax_id)
-species3_NOG = find_NOGs(species3_tax_id)
+species1_NOG = NOG_list(species1_tax_id)
+species2_NOG = NOG_list(species2_tax_id)
+species3_NOG = NOG_list(species3_tax_id)
 print("species1_NOGs: ", len(species1_NOG))
 print("species2_NOGs: ", len(species2_NOG))
 print("species3_NOGs: ", len(species3_NOG))
@@ -125,16 +125,24 @@ def find_nonhomologs(species1_NOG, species2_NOG):
             nonhomologs.append(nog1)
     return nonhomologs
 
-Hs_Pt_Homologs = find_homologs(species1_NOG, species3_NOG)
-Mm_Pt_Homologs = find_homologs(species2_NOG, species3_NOG)
-nonhomologs = find_nonhomologs(Mm_Pt_Homologs, Hs_Pt_Homologs)
+Hs_NOGs = NOG_list(species1_tax_id)
+Mm_NOGs = NOG_list(species2_tax_id)
+Pt_NOGs = NOG_list(species3_tax_id)
+#print("Hs: ", Hs_NOGs)
+#print("Mm: ", Mm_NOGs)
+#print("Pt: ", Pt_NOGs)
+
+Hs_Pt_Homologs = find_homologs(Hs_NOGs, Pt_NOGs)
+#print("Hs pT homologs: ", Hs_Pt_Homologs)
+nonhomologs = find_nonhomologs(Hs_Pt_Homologs, Mm_NOGs)
+print("nonhomologs: ", len(nonhomologs))
 
 #nonhomologs = find_nonhomologs(species1_NOG, species2_NOG)
 #homologs = find_homologs(species3_NOG, nonhomologs )
 #print("nonhomologs of species 1 and 2:", len(nonhomologs))
 #print("homologs:", len(homologs))
 
-print("nonhomologs of Hs and Mm in Pt: ", len(nonhomologs))
-print(find_NOG_and_proteinID(species1_tax_id))
-print(NOG_dict_len(species1_tax_id))
-print(NOG_list(species1_tax_id))
+#print("nonhomologs of Hs and Mm in Pt: ", len(nonhomologs))
+#print(find_NOG_and_proteinID(species1_tax_id))
+#print(NOG_dict_len(species1_tax_id))
+#print(NOG_list(species1_tax_id))
