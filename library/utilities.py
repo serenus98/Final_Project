@@ -1,6 +1,4 @@
-def hello():
-    print("hello")
-    
+ 
 def readFile(filePath):
     # reading a file and returning a list of lines
     with open(filePath, 'r') as f:
