@@ -1,7 +1,9 @@
 from pathlib import Path
+from library.utilities import *
 #import argparse
 
 working_directory = Path(__file__).absolute().parent
+
 
 #parser = argparse.ArgumentParser()
 #parser.add_argument('species1', help='The name of the first species')
@@ -17,10 +19,11 @@ me_NOG_test = "data/Test_members_data.txt"
 meNOG_members_filename_path = working_directory / meNOG_members
 me_NOG_test_filename_path = working_directory / me_NOG_test
 
-def readFile(filePath):
-    # reading a file and returning a list of lines
-    with open(filePath, 'r') as f:
-        return [l.strip() for l in f.readlines()]
+
+#def readFile(filePath):
+#    # reading a file and returning a list of lines
+#    with open(filePath, 'r') as f:
+#        return [l.strip() for l in f.readlines()]
     
 species_list = readFile(eggnog4_species_list_filename_path)
 species1 = "Homo sapiens"
