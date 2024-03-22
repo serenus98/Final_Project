@@ -154,14 +154,22 @@ annotations_list = readFile(me_NOG_annotations_filename_path)
 
 def find_annotations(NOG_list, annotations_list = annotations_list):
     annotated_NOGs_list = []
-    
+    new_list = []
     for line in annotations_list:
         for nog in NOG_list:
             if nog in line:
                 annotated_NOGs_list.append([nog, line.split("\t")[2], line.split("\t")[4], line.split("\t")[5]])
-    return annotated_NOGs_list
+    for line in annotated_NOGs_list:
+        if line not in new_list:
+            new_list.append(line)
+    return new_list
 
-print("anno: ", find_annotations(nonhomologs))
+anno_list = find_annotations(nonhomologs)
+output_file = working_directory / "results/annotations.txt"    
+
+writeFile(anno_list, output_file)
+#print("anno: ", find_annotations(nonhomologs))
+    
 #nonhomologs = find_nonhomologs(species1_NOG, species2_NOG)
 #homologs = find_homologs(species3_NOG, nonhomologs )
 #print("nonhomologs of species 1 and 2:", len(nonhomologs))
