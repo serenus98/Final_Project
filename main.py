@@ -148,7 +148,8 @@ def protein_list(taxon_ID, nonhomologs = nonhomologs):
 
 species1_proteins = protein_list(species1_tax_id)
 #print("species1_proteins: ", len(species1_proteins))
-
+output_file_proteins = working_directory / "results/proteins.txt"
+writeFile(species1_proteins, output_file_proteins)
 
 annotations_list = readFile(me_NOG_annotations_filename_path)
 
@@ -165,9 +166,9 @@ def find_annotations(NOG_list, annotations_list = annotations_list):
     return new_list
 
 anno_list = find_annotations(nonhomologs)
-output_file = working_directory / "results/annotations.txt"    
+output_file_annotations = working_directory / "results/annotations.txt"    
 
-writeFile(anno_list, output_file)
+writeFile(anno_list, output_file_annotations)
 #print("anno: ", find_annotations(nonhomologs))
     
 #nonhomologs = find_nonhomologs(species1_NOG, species2_NOG)
