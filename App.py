@@ -16,6 +16,7 @@ me_NOG_test_filename_path = working_directory / me_NOG_test
 me_NOG_annotations_filename_path = working_directory / me_NOG_annotations
 
 species_list = readFile(eggnog4_species_list_filename_path)
+members_list = readFile(meNOG_members_filename_path)
 # If you're using Python 2, you would import it as:
 # import Tkinter as tk
 # Create the main application window
@@ -33,49 +34,30 @@ root.geometry("500x500")
 root.minsize(300, 200)
 # You can specify a maximum window size (optional)
 root.maxsize(800, 600)
-# Create a StringVar to hold the selected option
-species1 = StringVar()
-species2 = StringVar()
-# Create the dropdown menu
-#dropdown = OptionMenu(root, selected_option, "Option 1", "Option 2", "Option 3", "Option 4")
-#dropdown.pack()
-# Run the main event loop
 
-listbox1 = Listbox(root)
-listbox1.grid(row=0, column=0, pady=0, padx=10)
-listbox2 = Listbox(root)
-listbox2.grid(row=0, column=1, pady=20, padx=10)
+value1 = StringVar()
+value2 = StringVar()
+value1.set("")
+value2.set("")
+e1 = Entry(root, textvariable = value1, width=50)
+e1.grid(row=5,column=0)
+e2 = Entry(root, textvariable = value2, width=50)
+e2.grid(row=6,column=0)
 
-species_listbox = fun.list_all_species(species_list)
+def output_homologs(e1=e1, e2=e2, species_list=species_list, members_list=members_list): 
+    speci1 = e1.get()
+    speci2 = e2.get()
+    print("HEREE:" + speci1 + speci2)
+    species1_tax = fun.find_TaxonID(speci1, species_list)
+    species2_tax = fun.find_TaxonID(speci2, species_list)
+    species1_NOG = fun.find_NOGs(species1_tax,members_list)
+    species2_NOG = fun.find_NOGs(species2_tax,members_list)
+    homologs = fun.find_homologs(species1_NOG, species2_NOG)
+    result = Label(root, text= str(len(homologs)))
+    result.grid(row=6, column=0)
+    return result
 
-for species in species_listbox:
-    listbox1.insert(END, species)
-    listbox2.insert(END, species)
-
-selection1 = Label(root, text= "none")
-selection1.grid(row=2, column=0)
-selection2 = Label(root, text= "none")
-selection2.grid(row=2, column=1)
-
-def show1(selection1=selection1, listbox1=listbox1):
-    species1 = listbox1.get(ANCHOR)
-    selection1 = Label(root, text="")
-    selection1 = Label(root, text=species1)
-    selection1.grid(row=2, column=0)
-    return species1
-def show2(selection2=selection2, listbox2=listbox2):
-    species2 = listbox2.get(ANCHOR)
-    selection2 = Label(root, text="")
-    selection2 = Label(root, text=species2)
-    selection2.grid(row=2, column=1)
-    return species2
-
-
-select_species1 = Button(root, command=show1, text="select species1")
-select_species2 = Button(root, command=show2, text="select species2")
-select_species1.grid(row=1, column=0)
-select_species2.grid(row=1, column=1)
-
-get_homologs = Button(root, command=fun.find_homologs)
+get_homologs = Button(root, command=output_homologs, text="calculate number of homologs")
+get_homologs.grid(row=0, column=0)
 
 root.mainloop()

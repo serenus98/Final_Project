@@ -61,3 +61,10 @@ def NOG_list(taxon_ID, members_list):
             if protein[0] == taxon_ID:
                 NOGs_list.append(key)
     return NOGs_list
+
+def find_homologs(species1_NOG, species2_NOG):
+    homologs = []
+    for nog1 in species1_NOG:
+        if nog1 in species2_NOG:
+            homologs.append(nog1)
+    return homologs

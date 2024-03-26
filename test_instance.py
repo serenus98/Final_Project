@@ -58,7 +58,7 @@ def find_NOGs (taxon_ID, members_list = members_list):
     return NOG_list
 
 def NOG_dict_len(taxon_ID):
-    dict = find_NOG_and_proteinID(taxon_ID)
+    dict = fun.find_NOG_and_proteinID(taxon_ID)
     return len(dict)
 
 def find_protein_from_NOG(NOG_list, members_list = members_list):
@@ -143,12 +143,13 @@ output_file_annotations = working_directory / "results/annotations.txt"
 writeFile(anno_list, output_file_annotations)
 #print("anno: ", find_annotations(nonhomologs))
     
-#nonhomologs = find_nonhomologs(species1_NOG, species2_NOG)
-#homologs = find_homologs(species3_NOG, nonhomologs )
-#print("nonhomologs of species 1 and 2:", len(nonhomologs))
-#print("homologs:", len(homologs))
+def output_homologs(speci1, speci2, species_list=species_list, members_list=members_list): 
+    species1_tax = fun.find_TaxonID(speci1, species_list)
+    species2_tax = fun.find_TaxonID(speci2, species_list)
+    species1_NOG = fun.find_NOGs(species1_tax,members_list)
+    species2_NOG = fun.find_NOGs(species2_tax,members_list)
+    homologs = fun.find_homologs(species1_NOG, species2_NOG)
+    result = len(homologs)
+    return result
 
-#print("nonhomologs of Hs and Mm in Pt: ", len(nonhomologs))
-#print(find_NOG_and_proteinID(species1_tax_id))
-#print(NOG_dict_len(species1_tax_id))
-#print(NOG_list(species1_tax_id))
+print(output_homologs("Homo sapiens", "Mus musculus"))
