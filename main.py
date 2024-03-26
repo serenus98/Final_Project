@@ -33,7 +33,8 @@ print("species1_tax_id: ", species1_tax_id)
 print("species2_tax_id: ", species2_tax_id)
 print("species3_tax_id: ", species3_tax_id)
 members_list = readFile(meNOG_members_filename_path)
-
+listbox = fun.list_all_species(species_list)
+print(listbox[0:10])
 #members_list = readFile(me_NOG_test_filename_path)
 
 #def find_NOGs (taxon_ID, members_list = members_list):
@@ -80,23 +81,14 @@ def NOG_dict_len(taxon_ID):
     dict = find_NOG_and_proteinID(taxon_ID)
     return len(dict)
 
-def NOG_list(taxon_ID):
-    NOGs_list = []
-    dict = find_NOG_and_proteinID(taxon_ID)
-    for key in dict:
-        for protein in dict[key]:
-            if protein[0] == taxon_ID:
-                NOGs_list.append(key)
-    return NOGs_list
-
 def find_protein_from_NOG(NOG_list, members_list = members_list):
     NOG_proteinID_dict = {}
 
     return NOG_proteinID_dict
 
-species1_NOG = NOG_list(species1_tax_id)
-species2_NOG = NOG_list(species2_tax_id)
-species3_NOG = NOG_list(species3_tax_id)
+species1_NOG = fun.NOG_list(species1_tax_id, members_list)
+species2_NOG = fun.NOG_list(species2_tax_id, members_list)
+species3_NOG = fun.NOG_list(species3_tax_id, members_list)
 print("species1_NOGs: ", len(species1_NOG))
 print("species2_NOGs: ", len(species2_NOG))
 print("species3_NOGs: ", len(species3_NOG))
