@@ -30,9 +30,6 @@ listbox = fun.list_all_species(species_list)
 species1_NOG = fun.NOG_list(species1_tax_id, members_list)
 species2_NOG = fun.NOG_list(species2_tax_id, members_list)
 species3_NOG = fun.NOG_list(species3_tax_id, members_list)
-print("species1_NOGs: ", len(species1_NOG))
-print("species2_NOGs: ", len(species2_NOG))
-print("species3_NOGs: ", len(species3_NOG))
 
 homologs_mus_homo = fun.find_homologs(species1_NOG, species2_NOG)
 

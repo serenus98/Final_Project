@@ -6,7 +6,13 @@ from library.utilities import *
 from tkinter import messagebox
 from sys import exit
 working_directory = Path(__file__).absolute().parent
-
+# If you're using Python 2, you would import it as:
+# import Tkinter as tk
+# Create the main application window
+root = Tk()
+# Additional libraries can be imported as needed for your specific project
+# For example, if you plan to work with dropdown menu options, you might import tkinter.ttk
+# import tkinter.ttk as ttk
 eggnog4_species_list = "data/eggnog4.species_list.txt"
 eggnog4_species_list_filename_path = working_directory / eggnog4_species_list
 meNOG_members = "data/meNOG.members.tsv"
@@ -16,17 +22,18 @@ meNOG_members_filename_path = working_directory / meNOG_members
 me_NOG_test_filename_path = working_directory / me_NOG_test
 me_NOG_annotations_filename_path = working_directory / me_NOG_annotations
 
+paths = [meNOG_members_filename_path, me_NOG_test_filename_path, me_NOG_annotations_filename_path]
+
+for path in paths:
+    obj = Path(path)
+    if obj.exists() == False:
+        retry = messagebox.showerror("ERROR", f"{path} not found") 
+
 species_list = readFile(eggnog4_species_list_filename_path)
 members_list = readFile(meNOG_members_filename_path)
 listbox = fun.list_all_species(species_list)
 
-# If you're using Python 2, you would import it as:
-# import Tkinter as tk
-# Create the main application window
-root = Tk()
-# Additional libraries can be imported as needed for your specific project
-# For example, if you plan to work with dropdown menu options, you might import tkinter.ttk
-# import tkinter.ttk as ttk
+
 
 # Create the main application window
 # Set the window title
