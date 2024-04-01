@@ -24,8 +24,8 @@ def list_all_species(species_list):
     return sorted_output
 
 def find_NOGs (taxon_ID, members_list):
+    #takes the taxonID as input and returns a list of taxonID.ProteinIDs
     NOG_list = []
-
     for line in members_list:
             Nog = line.split("\t")[1]
             TaxonID_ProteinID = line.split("\t")[5]
@@ -34,9 +34,10 @@ def find_NOGs (taxon_ID, members_list):
     return NOG_list
 
 def find_NOG_and_proteinID(taxon_ID, members_list):
+    # takes the taxonID as input and returns a dictionary of NOGs as keys and corresponding proteinIDs as values
+    # all proteins belong to said taxonID
     NOG_dict = {}
     NOG_dict_result = {}
-    #ID_list = []
     for line in members_list:
             Nog = line.split("\t")[1]
             TaxonID_ProteinID = line.split("\t")[5]
@@ -54,6 +55,8 @@ def find_NOG_and_proteinID(taxon_ID, members_list):
     return NOG_dict_result
 
 def NOG_list(taxon_ID, members_list):
+    # takes the taxonID as input and returns a list of dictionary of NOGs as keys and corresponding proteinIDs as values
+    # all proteins belong to said taxonID
     NOGs_list = []
     dict = find_NOG_and_proteinID(taxon_ID, members_list)
     for key in dict:
@@ -63,6 +66,7 @@ def NOG_list(taxon_ID, members_list):
     return NOGs_list
 
 def find_homologs(species1_NOG, species2_NOG):
+    # takes two lists of NOGS as input and returns a list of NOGs that appear in both lists
     homologs = []
     for nog1 in species1_NOG:
         if nog1 in species2_NOG:
@@ -70,6 +74,8 @@ def find_homologs(species1_NOG, species2_NOG):
     return homologs
 
 def find_annotations(NOG_list, annotations_list):
+    # takes a list of NOGs as input and returns a list of lists containing the NOG and its corresponding annotations
+    # namely, annotation, functional category, and number of proteins
     annotated_NOGs_list = []
     new_list = []
     for line in annotations_list:
@@ -97,14 +103,8 @@ def protein_list(taxon_ID, nonhomologs, members_list):
             new_list.append(list)
     return new_list
 
-def find_homologs(species1_NOG, species2_NOG):
-    homologs = []
-    for nog1 in species1_NOG:
-        if nog1 in species2_NOG:
-            homologs.append(nog1)
-    return homologs
-
 def find_nonhomologs(species1_NOG, species2_NOG):
+    # takes two lists of NOGS as input and returns a list of NOGs that appear only in the first list
     nonhomologs = []
     for nog1 in species1_NOG:
         if nog1 not in species2_NOG:
@@ -112,9 +112,10 @@ def find_nonhomologs(species1_NOG, species2_NOG):
     return nonhomologs
 
 def find_NOG_and_all_proteinIDs(Homolog_NOG_list, members_list):
+    # custom function for Task 3: takes as input the list of homologous NOGs and 
+    # returns a list of lists containing the NOG with the corresponding proteinIDs
     NOG_dict = {}
     NOG_dict_result = {}
-    ID_list = []
     newNOGs = {}
     rat_mus_IDs = ["10090", "10116"]
     for line in members_list:
@@ -147,7 +148,6 @@ def protein_list_2species(taxon_ID, Homolog_NOG_list, members_list):
     dict = find_NOG_and_all_proteinIDs(Homolog_NOG_list, members_list)
     for key in dict:
         for protein in dict[key]:
-            print(protein[0])
             if protein[0] in taxon_ID:
                 protein_list.append([key, protein[1]])
     for list in protein_list:
@@ -156,6 +156,7 @@ def protein_list_2species(taxon_ID, Homolog_NOG_list, members_list):
     return new_list
 
 def add_func_cat(Protein_ID_list, annotations_list):
+    #takes as input a list of Protein IDs and NOGs and adds the corresponding annotation to that list
     annotated_NOGs_list = []
     new_list = []
     for line in annotations_list:

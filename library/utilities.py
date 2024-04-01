@@ -5,6 +5,9 @@ def readFile(filePath):
         return [l.strip() for l in f.readlines()]
     
 def writeFile(data_list, destination):
+    # takes a list of lists as input, as well as a destination path to save the output file
+    # creates a text file in which each line corresponds to a list with its items 
+    # separated by a tab
     f_out = open(destination, 'w')
     for line in data_list:
         data_line = ""
