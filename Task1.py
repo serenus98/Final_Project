@@ -73,7 +73,6 @@ def output_homologs(e1=e1, e2=e2, species_list=species_list, members_list=member
         species2_tax = fun.find_TaxonID(speci2, species_list)
         species1_NOG = fun.find_NOGs(species1_tax,members_list)
         species2_NOG = fun.find_NOGs(species2_tax,members_list)
-        print(species1_NOG)
         homologs = fun.find_homologs(species1_NOG, species2_NOG)
         result = Label(root, text= "The number of homologs in the selected species is: " + str(len(homologs)))
         result.grid(row=5, column=0)

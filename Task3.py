@@ -30,21 +30,21 @@ species2 = "Mus musculus"
 #find the taxonID of the species
 species1_tax_id = fun.find_TaxonID(species1, species_list)
 species2_tax_id = fun.find_TaxonID(species2, species_list)
-print("species1_tax_id: ", species1_tax_id)
-print("species2_tax_id: ", species2_tax_id)
+print("Rattus norvegicus taxon ID: ", species1_tax_id)
+print("Mus musculus taxon ID: ", species2_tax_id)
 members_list = readFile(meNOG_members_filename_path)
 Rn_NOGs = fun.NOG_list(species1_tax_id, members_list)
 Mm_NOGs = fun.NOG_list(species2_tax_id, members_list)
 
 Rn_Mm_Homologs = fun.find_homologs(Rn_NOGs, Mm_NOGs)
-proteinsss = fun.protein_list_2species(["10116","10090"],Rn_Mm_Homologs, members_list)
+proteins = fun.protein_list_2species(["10116","10090"],Rn_Mm_Homologs, members_list)
 new_list = []
-for protein in proteinsss:
+for protein in proteins:
     if protein[0] not in new_list:
         new_list.append(protein[0])
 
 print("Number of NOGs common only to R. norvegicus and M. musculus: ", len(new_list))
 annotations_list = readFile(me_NOG_annotations_filename_path)
-annos = fun.add_func_cat(proteinsss, annotations_list)
+annos = fun.add_func_cat(proteins, annotations_list)
 output_file_annotations = working_directory / "results/task3_annotated_data.txt"    
 writeFile(annos, output_file_annotations)

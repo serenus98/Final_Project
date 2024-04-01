@@ -36,9 +36,9 @@ species3 = "Pan troglodytes"
 species1_tax_id = fun.find_TaxonID(species1, species_list)
 species2_tax_id = fun.find_TaxonID(species2, species_list)
 species3_tax_id = fun.find_TaxonID(species3, species_list)
-print("species1_tax_id: ", species1_tax_id)
-print("species2_tax_id: ", species2_tax_id)
-print("species3_tax_id: ", species3_tax_id)
+print("Homo sapiens taxon ID: ", species1_tax_id)
+print("Mus musculus taxon ID: ", species2_tax_id)
+print("Pan troglodytes taxon ID: ", species3_tax_id)
 
 #read the files
 members_list = readFile(meNOG_members_filename_path)
@@ -55,7 +55,7 @@ homologs_mus_homo = fun.find_homologs(Hs_NOGs, Mm_NOGs)
 Hs_Pt_Homologs = fun.find_homologs(Hs_NOGs, Pt_NOGs)
 #a list of orthologs groups homologous to species 1 and 3 but not 2
 nonhomologs = fun.find_nonhomologs(Hs_Pt_Homologs, Mm_NOGs)
-print("Number of nonhomologs: ", len(nonhomologs))
+print("Number of Pan troglodytes and Homo sapiens homologs with no homolog in Mus musculus: ", len(nonhomologs))
 
 #writing the proteins with their corresponding orthologous group to a file
 species1_proteins = fun.protein_list(species1_tax_id, nonhomologs, members_list)
