@@ -39,7 +39,7 @@ listbox = fun.list_all_species(species_list)
 # Set the window title
 root.title("Final Project - Task 1")
 # Set the window dimensions (width x height)
-root.geometry("500x500")
+root.geometry("200x200")
 # You can also specify a minimum window size (optional)
 root.minsize(300, 200)
 # You can specify a maximum window size (optional)
